@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templatemain.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <ui:define name="head">
+        
+    </ui:define>
+    <ui:define name="content">   
+
+        <p:growl id="grwlErrores"/>
+        <p:diagram id="pnlArbol" value="#{avlControlador.model}" style="height:250px" styleClass="ui-widget-content" />
+
+        <h:form>
+        <p:commandButton value="Balancear" action="#{avlControlador.balancear()}"
+                                 update="@all" ajax="false"/>
+        </h:form>
+        <p:panelGrid columns="2">
+        <h:form>
+            <p:panel header="Llenar árbol">
+                <p:inputTextarea required="true" cols="40" value="#{avlControlador.datoscsv}"/>
+                <p:commandButton value="LLenar Arbol" action="#{avlControlador.extraerDatos()}"
+                                 update="@all" ajax="false"/>
+
+            </p:panel>
+        </h:form>
+        
+        <h:form>
+            <p:panel header="Panel Nuevo Nodo">
+                <p:outputLabel value="Dato:"/>
+                <p:inputText required="true" value="#{avlControlador.dato}"/>
+                <p:commandButton ajax="false"  value="Agregar" action="#{avlControlador.adicionarNodo()}"
+                                 update="@all" />
+                <p:commandButton value="InOrden" action="#{avlControlador.habilitarInOrden()}" update="@all" />
+
+
+
+            </p:panel>
+        </h:form>
+            </p:panelGrid>
+        <h:panelGroup rendered="#{avlControlador.verInOrden}">
+            <p:panel header="InOrden">
+                <p:dataTable var="nodo" value="#{avlControlador.arbol.inOrden()}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{nodo}" />
+                    </p:column>
+
+                </p:dataTable>
+
+            </p:panel>
+        </h:panelGroup>
+        
+      </ui:define>
+
+</ui:composition>
