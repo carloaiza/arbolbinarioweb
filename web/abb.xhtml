@@ -7,7 +7,24 @@
     <ui:define name="head">
         
     </ui:define>
-    <ui:define name="content">       
+    <ui:define name="content"> 
+        <style type="text/css">
+    .ui-diagram-element {   
+        width:8em; 
+        height:4em;     
+        line-height:4em;
+        text-align: center;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+        border-radius: 4px;
+        border: 1px solid #646D7E;
+        background-color: #646D7E;
+        color: #ffffff;
+    }
+     
+    .ui-diagram-element:hover {
+        background-color: #828B9C;
+    }
+    </style>
 
         <p:growl id="grwlErrores"/>
         <p:diagram id="pnlArbol" value="#{arbolBinarioControlador.model}" style="height:400px" styleClass="ui-widget-content" />
@@ -20,7 +37,6 @@
                                  update="@all" />
                 <p:commandButton value="InOrden" action="#{arbolBinarioControlador.habilitarInOrden()}" update="@all" ajax="false"/>
 
-                <p:commandButton value="Preorden"/>
 
 
             </p:panel>
@@ -56,6 +72,16 @@
 
             </p:panel>
         </h:panelGroup>
+       
+        <p:panel header="PreOrden">
+            <p:dataTable var="data" value="#{arbolBinarioControlador.arbol.preOrden()}">
+                    <p:column headerText="Número">
+                        <h:outputText value="#{data}" />
+                    </p:column>
+
+                </p:dataTable>
+        </p:panel>
+        
         <p:diagram id="pnlArbolTerminados" value="#{arbolBinarioControlador.modelArbol2}" style="height:400px" styleClass="ui-widget-content" />
         
     </ui:define>

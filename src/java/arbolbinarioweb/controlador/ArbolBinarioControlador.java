@@ -150,7 +150,8 @@ public class ArbolBinarioControlador implements Serializable {
     private void pintarArbol(Nodo reco, DefaultDiagramModel model, Element padre, int x, int y) {
 
         if (reco != null) {
-            Element elementHijo = new Element(reco.getDato());
+            Element elementHijo = new Element(reco.getDato() + " G:"+reco.obtenerGradoNodo()+" H:"+
+                    reco.obtenerAlturaNodo());
 
             elementHijo.setX(String.valueOf(x) + "em");
             elementHijo.setY(String.valueOf(y) + "em");
@@ -165,8 +166,8 @@ public class ArbolBinarioControlador implements Serializable {
 
             model.addElement(elementHijo);
 
-            pintarArbol(reco.getIzquierda(), model, elementHijo, x - 5, y + 5);
-            pintarArbol(reco.getDerecha(), model, elementHijo, x + 5, y + 5);
+            pintarArbol(reco.getIzquierda(), model, elementHijo, x - 10, y + 5);
+            pintarArbol(reco.getDerecha(), model, elementHijo, x + 10, y + 5);
         }
     }
 
