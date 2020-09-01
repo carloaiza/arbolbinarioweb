@@ -140,17 +140,17 @@ public class ArbolBinarioControlador implements Serializable {
         model.setMaxConnections(-1);
         model.setConnectionsDetachable(false);
         StraightConnector connector = new StraightConnector();
-        connector.setPaintStyle("{strokeStyle:'#404a4e', lineWidth:2}");
+        connector.setPaintStyle("{strokeStyle:'#404a4e', lineWidth:6}");
         connector.setHoverPaintStyle("{strokeStyle:'#20282b'}");
         model.setDefaultConnector(connector);
-        pintarArbol(arbol.getRaiz(), model, null, 30, 0);
+        pintarArbol(arbol.getRaiz(), model, null, 50, 0);
 
-    }
+    }  //5, 9, 3
 
     private void pintarArbol(Nodo reco, DefaultDiagramModel model, Element padre, int x, int y) {
 
         if (reco != null) {
-            Element elementHijo = new Element(reco.getDato() + " G:"+reco.obtenerGradoNodo()+" H:"+
+            Element elementHijo = new Element(reco.getDato()+" G:"+reco.obtenerGradoNodo() +" H:"+
                     reco.obtenerAlturaNodo());
 
             elementHijo.setX(String.valueOf(x) + "em");

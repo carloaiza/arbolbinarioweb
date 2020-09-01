@@ -10,16 +10,16 @@
         <link href="#{facesContext.externalContext.requestContextPath}/resources/css/cssLayout.css" rel="stylesheet" type="text/css" media="screen"/>
         <title>Facelets Template</title>
         <style type="text/css">
-            .ui-diagram-element {   
-                width:3em; 
-                height:3em;
-                line-height:3em;
+            .ui-diagram-element {
+                width: 8em;
+                height: 3em;
+                line-height: 3em;
                 text-align: center;
                 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
-                border-radius: 3em;
+                /* border-radius: 3em; */
                 border: 1px solid #186080;
-                background-color: #186080;
-                color: #cccccc;
+                background-color: gray;
+                color: #000000;
             }
             .ui-diagram-element-busc {   
                 width:3em; 
@@ -36,11 +36,11 @@
             .ui-diagram-element:hover {
                 background-color: #20282b;
             }
-            
+
             .ui-widget-header{
-                 background-color: transparent;
-                 background: transparent;
-                 border: 0px;
+                background-color: transparent;
+                background: transparent;
+                border: 0px;
             }
         </style>
         <ui:insert name="head"></ui:insert>
@@ -49,23 +49,24 @@
     <h:body>
 
         <div id="top" class="top">
-            <h:form>
-
+            <h:form>                
                 <p:dock id="dockTop" position="top"  >
                     <p:menuitem id="top2" value="Inicio" icon="/images/dock/home.png"  />
                     <p:menuitem id="top0" value="ABB" icon="/images/dock/abb.png" action="abb" ajax="false"/>
                     <p:menuitem id="top1" value="AVL" icon="/images/dock/abb.png" action="avl" ajax="false"/>
-                    
-                </p:dock>
+
+                </p:dock>                   
+
             </h:form>
+            <h:graphicImage url="/resources/imagenes/logo.png" width="100" style="position: absolute!important; top:5px!important;"/>
             <ui:insert name="top"></ui:insert>
         </div>
 
         <div id="content" class="center_content">
             <ui:insert name="content"></ui:insert>
-            
+
         </div>
-        
+
 
     </h:body>
 
