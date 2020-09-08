@@ -18,8 +18,9 @@
                                  update="@all" />
                 <p:commandButton value="InOrden" action="#{arbolBinarioControlador.habilitarInOrden()}" update="@all" ajax="false"/>
                 <p:outputLabel value="Nro Nodos: "/>
-                <p:outputLabel value="#{arbolBinarioControlador.arbol.contarNodos()}"/>
-
+                <p:outputLabel value="#{arbolBinarioControlador.arbol.contarNodos()}"/>                
+                <p:outputLabel value=" Suma Total árbol: "/>
+                <p:outputLabel value="#{arbolBinarioControlador.arbol.sumarArbol()}"/>
 
             </p:panel>
         </h:form>
@@ -31,6 +32,16 @@
 
             </p:panel>
         </h:form>
+        
+        <h:form >
+            <p:panel header="Promediar árbol">
+                <p:inputText id="txtPromediar" value="#{arbolBinarioControlador.datoPromediar}" 
+                             required="true" requiredMessage="Se necesita un valor a promediar"/>
+                <p:commandButton value="Promediar" update="@all" ajax="false" 
+                                 action="#{arbolBinarioControlador.promediar()}" />
+            </p:panel>
+        </h:form>
+        
         <h:form>
 
             <p:panel header="Terminados en">
@@ -43,7 +54,7 @@
 
             </p:panel>
         </h:form>
-        <h:panelGroup rendered="#{arbolBinarioControlador.verInOrden}">
+        <h:panelGroup >
             <p:panel header="InOrden">
                 <p:dataTable var="nodo" value="#{arbolBinarioControlador.arbol.inOrden()}">
                     <p:column headerText="Id">

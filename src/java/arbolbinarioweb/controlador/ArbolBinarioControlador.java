@@ -42,6 +42,18 @@ public class ArbolBinarioControlador implements Serializable {
     private int terminado;
     private ArbolBinario arbolTerminados = new ArbolBinario();
 
+    private int datoPromediar;
+
+    public int getDatoPromediar() {
+        return datoPromediar;
+    }
+
+    public void setDatoPromediar(int datoPromediar) {
+        this.datoPromediar = datoPromediar;
+    }
+    
+    
+    
     public ArbolBinario getArbolTerminados() {
         return arbolTerminados;
     }
@@ -183,16 +195,16 @@ public class ArbolBinarioControlador implements Serializable {
     }
 
     public void buscarTerminadosEn() {
-        for (Element ele : model.getElements()) {
-            ele.setStyleClass("ui-diagram-element");
-            int numTerm = Integer.parseInt(ele.getData().toString());
-            if (numTerm < 0) {
-                numTerm *= -1;
-            }
-            if (numTerm % 10 == terminado) {
-                ele.setStyleClass("ui-diagram-element-busc");
-            }
-        }
+//        for (Element ele : model.getElements()) {
+//            ele.setStyleClass("ui-diagram-element");
+//            int numTerm = Integer.parseInt(ele.getData().toString());
+//            if (numTerm < 0) {
+//                numTerm *= -1;
+//            }
+//            if (numTerm % 10 == terminado) {
+//                ele.setStyleClass("ui-diagram-element-busc");
+//            }
+//        }
     }
 
     public void encontrarTerminadosEn() {
@@ -256,5 +268,37 @@ public class ArbolBinarioControlador implements Serializable {
             pintarArbolTerminados(reco.getDerecha(), model, elementHijo, x + 5, y + 5);
         }
     }
+    
+    public void promediar()
+    {
+        if(arbol.getRaiz()!=null)
+        {
+            ///Receta promediar
+            // buscar nodo  utilizando como parametro datopromediar
+            // contar a partir de un nodo
+            // sumar a partir de ese nodo
+            // calcular el promedio
+            // mostrar
+            Nodo nodoencontrado = arbol.buscarNodo(datoPromediar, arbol.getRaiz());
+            if(nodoencontrado != null)
+            {
+                //Encontró un arbol
+                float cont= arbol.contarNodos(nodoencontrado);
+                float suma = arbol.sumarNodos(nodoencontrado);
+                JsfUtil.addSuccessMessage("El árbol tiene "+ cont+" elementos,\n"
+                        + " suman "+suma+"\n, Promedian "+ (suma/cont));
+            }
+            else
+            {
+                JsfUtil.addErrorMessage("El dato a buscar no existe");
+            }
+            
+        }
+        else
+        {
+            JsfUtil.addErrorMessage("No puede promediar un árbol vacío");
+        }    
+    }
+    
 
 }
