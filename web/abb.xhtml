@@ -3,7 +3,8 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./templatemain.xhtml"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:h="http://xmlns.jcp.org/jsf/html">    
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">    
 
     <ui:define name="content"> 
 
@@ -17,6 +18,10 @@
                 <p:commandButton ajax="false"  value="Agregar" action="#{arbolBinarioControlador.adicionarNodo()}"
                                  update="@all" />
                 <p:commandButton value="InOrden" action="#{arbolBinarioControlador.habilitarInOrden()}" update="@all" ajax="false"/>
+                
+                <p:commandButton value="Podar" action="#{arbolBinarioControlador.podar()}" 
+                                 update="@all" ajax="false"/>
+                
                 <p:outputLabel value="Nro Nodos: "/>
                 <p:outputLabel value="#{arbolBinarioControlador.arbol.contarNodos()}"/>                
                 <p:outputLabel value=" Suma Total árbol: "/>
@@ -24,6 +29,17 @@
 
             </p:panel>
         </h:form>
+        <h:form>
+            <p:panel header="Obtener suma de un nodo">
+                <p:inputText value="#{arbolBinarioControlador.datoSumar}" required="true"/>
+                <p:commandButton value="Obtener suma" update="@all" ajax="false"
+                                 action="#{arbolBinarioControlador.sumarNodo()}" />
+            </p:panel>
+        </h:form>
+        
+        
+        
+        
         <h:form>
             <p:panel header="Llenar árbol">
                 <p:inputTextarea required="true" cols="40" value="#{arbolBinarioControlador.datoscsv}"/>
@@ -33,10 +49,12 @@
             </p:panel>
         </h:form>
         
-        <h:form >
+        <h:form prependId="false">
             <p:panel header="Promediar árbol">
-                <p:inputText id="txtPromediar" value="#{arbolBinarioControlador.datoPromediar}" 
-                             required="true" requiredMessage="Se necesita un valor a promediar"/>
+                <p:inputText id="txtPromediar" value="#{arbolBinarioControlador.datobuscar}" 
+                             required="true" requiredMessage="Se necesita un valor a promediar">
+                    <f:validateLongRange />
+                </p:inputText>
                 <p:commandButton value="Promediar" update="@all" ajax="false" 
                                  action="#{arbolBinarioControlador.promediar()}" />
             </p:panel>
@@ -78,6 +96,15 @@
         <p:panel header="PostOrden">
             <p:dataTable var="data" value="#{arbolBinarioControlador.arbol.postOrden()}">
                 <p:column headerText="Número">
+                    <h:outputText value="#{data}" />
+                </p:column>
+
+            </p:dataTable>
+        </p:panel>
+        
+        <p:panel header="NivelesOrden">
+            <p:dataTable var="data" value="#{arbolBinarioControlador.arbol.imprimirNivel()}">
+                <p:column headerText="Nivel">
                     <h:outputText value="#{data}" />
                 </p:column>
 

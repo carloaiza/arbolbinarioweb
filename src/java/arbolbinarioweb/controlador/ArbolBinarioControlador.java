@@ -44,6 +44,26 @@ public class ArbolBinarioControlador implements Serializable {
 
     private int datoPromediar;
 
+    private String datobuscar;
+
+    private int datoSumar;
+
+    public int getDatoSumar() {
+        return datoSumar;
+    }
+
+    public void setDatoSumar(int datoSumar) {
+        this.datoSumar = datoSumar;
+    }
+
+    public String getDatobuscar() {
+        return datobuscar;
+    }
+
+    public void setDatobuscar(String datobuscar) {
+        this.datobuscar = datobuscar;
+    }
+
     public int getDatoPromediar() {
         return datoPromediar;
     }
@@ -51,9 +71,7 @@ public class ArbolBinarioControlador implements Serializable {
     public void setDatoPromediar(int datoPromediar) {
         this.datoPromediar = datoPromediar;
     }
-    
-    
-    
+
     public ArbolBinario getArbolTerminados() {
         return arbolTerminados;
     }
@@ -162,8 +180,8 @@ public class ArbolBinarioControlador implements Serializable {
     private void pintarArbol(Nodo reco, DefaultDiagramModel model, Element padre, int x, int y) {
 
         if (reco != null) {
-            Element elementHijo = new Element(reco.getDato()+" G:"+reco.obtenerGradoNodo() +" H:"+
-                    reco.obtenerAlturaNodo());
+            Element elementHijo = new Element(reco.getDato() + " G:" + reco.obtenerGradoNodo() + " H:"
+                    + reco.obtenerAlturaNodo());
 
             elementHijo.setX(String.valueOf(x) + "em");
             elementHijo.setY(String.valueOf(y) + "em");
@@ -219,13 +237,11 @@ public class ArbolBinarioControlador implements Serializable {
 
     private void encontrarTerminadosEn(Nodo reco) throws ArbolBinarioException {
         if (reco != null) {
-            int numTerm= reco.getDato();
-            if(numTerm<0)
-            {
-                numTerm *=-1;
+            int numTerm = reco.getDato();
+            if (numTerm < 0) {
+                numTerm *= -1;
             }
-            if(numTerm%10==terminado)
-            {
+            if (numTerm % 10 == terminado) {
                 arbolTerminados.adicionarNodo(reco.getDato(), arbolTerminados.getRaiz());
             }
             encontrarTerminadosEn(reco.getIzquierda());
@@ -268,37 +284,47 @@ public class ArbolBinarioControlador implements Serializable {
             pintarArbolTerminados(reco.getDerecha(), model, elementHijo, x + 5, y + 5);
         }
     }
-    
-    public void promediar()
-    {
-        if(arbol.getRaiz()!=null)
-        {
-            ///Receta promediar
-            // buscar nodo  utilizando como parametro datopromediar
-            // contar a partir de un nodo
-            // sumar a partir de ese nodo
-            // calcular el promedio
-            // mostrar
-            Nodo nodoencontrado = arbol.buscarNodo(datoPromediar, arbol.getRaiz());
-            if(nodoencontrado != null)
-            {
+
+    public void promediar() {
+        if (arbol.getRaiz() != null) {
+            try {
+                ///Receta promediar
+                // buscar nodo  utilizando como parametro datopromediar
+                // contar a partir de un nodo
+                // sumar a partir de ese nodo
+                // calcular el promedio
+                // mostrar
+                Nodo nodoencontrado = arbol.buscarNodo(Integer.parseInt(datobuscar), arbol.getRaiz());
                 //Encontró un arbol
-                float cont= arbol.contarNodos(nodoencontrado);
+                float cont = arbol.contarNodos(nodoencontrado);
                 float suma = arbol.sumarNodos(nodoencontrado);
-                JsfUtil.addSuccessMessage("El árbol tiene "+ cont+" elementos,\n"
-                        + " suman "+suma+"\n, Promedian "+ (suma/cont));
+                JsfUtil.addSuccessMessage("El árbol tiene " + cont + " elementos,\n"
+                        + " suman " + suma + "\n, Promedian " + (suma / cont));
+
+            } catch (ArbolBinarioException ex) {
+                 JsfUtil.addErrorMessage(ex.getMessage());
+               
             }
-            else
-            {
-                JsfUtil.addErrorMessage("El dato a buscar no existe");
-            }
-            
-        }
-        else
-        {
+
+        } else {
             JsfUtil.addErrorMessage("No puede promediar un árbol vacío");
-        }    
+        }
     }
-    
+
+    public void podar() {
+        arbol.podar();
+        pintarArbol();
+    }
+
+    public void sumarNodo() {
+        
+        try {
+            Nodo nodoEncontrado= arbol.buscarNodo(datoSumar, arbol.getRaiz());
+            JsfUtil.addSuccessMessage("El nodo suma: "+
+                    arbol.sumarNodos(nodoEncontrado));
+        } catch (ArbolBinarioException ex) {
+             JsfUtil.addErrorMessage(ex.getMessage());
+        }
+    }
 
 }
