@@ -1,13 +1,52 @@
 package arbolbinarioweb.controlador.util;
 
 import java.util.List;
+import javax.faces.FactoryFinder;
+import javax.faces.application.Application;
+import javax.faces.application.ApplicationFactory;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.el.ValueBinding;
 import javax.faces.model.SelectItem;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 public class JsfUtil {
+    
+    
+    public static ServletContext getServletContext() {
+        return (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+    }
+
+    public static ExternalContext getExternalContext() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        return fc.getExternalContext();
+    }
+
+    public static HttpSession getHttpSession(boolean create) {
+        return (HttpSession) FacesContext.getCurrentInstance().
+                getExternalContext().getSession(create);
+    }
+
+      private static Application getApplication() {
+        ApplicationFactory appFactory = (ApplicationFactory) FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY);
+        return appFactory.getApplication();
+    }
+     private static ValueBinding getValueBinding(String el) {
+        return getApplication().createValueBinding(el);
+    }
+    
+    public static Object getManagedBean(String beanName) {
+       
+        return getValueBinding(getJsfEl(beanName)).getValue(FacesContext.getCurrentInstance());
+    }
+    
+     private static String getJsfEl(String value) {
+        return "#{" + value + "}";
+    }
 
     public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
         int size = selectOne ? entities.size() + 1 : entities.size();

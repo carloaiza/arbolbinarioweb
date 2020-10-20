@@ -47,6 +47,18 @@ public class ArbolBinarioControlador implements Serializable {
     private String datobuscar;
 
     private int datoSumar;
+    
+    private String textoEnviar;
+
+    public String getTextoEnviar() {
+        return textoEnviar;
+    }
+
+    public void setTextoEnviar(String textoEnviar) {
+        this.textoEnviar = textoEnviar;
+    }
+    
+    
 
     public int getDatoSumar() {
         return datoSumar;
@@ -175,7 +187,7 @@ public class ArbolBinarioControlador implements Serializable {
         model.setDefaultConnector(connector);
         pintarArbol(arbol.getRaiz(), model, null, 50, 0);
 
-    }  //5, 9, 3
+    }  
 
     private void pintarArbol(Nodo reco, DefaultDiagramModel model, Element padre, int x, int y) {
 
@@ -326,5 +338,22 @@ public class ArbolBinarioControlador implements Serializable {
              JsfUtil.addErrorMessage(ex.getMessage());
         }
     }
+    
+    public String irBeanSuma()
+    {
+        //Cálculos, bds, enviar correos
+        ArbolSumaControlador beanSuma= (ArbolSumaControlador) 
+                JsfUtil.getManagedBean("arbolSumaControlador");
+        
+        beanSuma.setTextoHeader(textoEnviar);
+        
+        //beanSuma.adicionarNodo(Integer.parseInt(textoEnviar));
+        beanSuma.llenarArbolsumas(arbol);
+        
+        return "abbsuma";
+    }
+    
+    
+    
 
 }

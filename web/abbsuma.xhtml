@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templatemain.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="content">
+        <h:form id="frmArbolSuma">
+            <p:growl id="grwlErroresSuma"/>
+            <p:panel id="pnlArbolSuma" header="#{arbolSumaControlador.textoHeader}">
+                <p:diagram id="diagrama" value="#{arbolSumaControlador.model}" style="height:400px" /> 
+            </p:panel>
+            <p:remoteCommand name="elementClickRight" actionListener="#{arbolSumaControlador.onClickRight()}"></p:remoteCommand>
+            
+            <script>
+                $(document).ready(function () {
+                    $('.ui-diagram > .ui-diagram-element').mousedown(function (info) {
+                        if (info.which === 3) {
+                            elementClickRight([{
+                                    name: 'elementId',
+                                    value: info.target.id
+                                }]);
+                        }
+                    });
+                });
+            </script>
+            
+            
+               
+
+                <p:panel header="Nuevo dato">
+                <p:inputText id="txtNuevoDato" required="true" 
+            value="#{arbolSumaControlador.numero}"/>
+            <p:commandButton value="Agregar" 
+            action="#{arbolSumaControlador.adicionarNodo()}"
+                update="@all" ajax="false"
+                />
+                </p:panel>
+                        <p:contextMenu id="mnuDiagrama" for="diagrama"
+                targetFilter=".ui-diagram-element">
+                <p:menuitem value="Ver datos"/>
+                
+                </p:contextMenu>
+                        </h:form>
+                        </ui:define>
+
+                        </ui:composition>

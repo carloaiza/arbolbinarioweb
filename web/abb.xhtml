@@ -34,10 +34,12 @@
                 <p:inputText value="#{arbolBinarioControlador.datoSumar}" required="true"/>
                 <p:commandButton value="Obtener suma" update="@all" ajax="false"
                                  action="#{arbolBinarioControlador.sumarNodo()}" />
+                
+                <p:inputText value="#{arbolBinarioControlador.textoEnviar}" required="true"/>
+                <p:commandButton value="Comunicación entre beans" ajax="false"
+                                 action="#{arbolBinarioControlador.irBeanSuma()}" />
             </p:panel>
         </h:form>
-        
-        
         
         
         <h:form>
